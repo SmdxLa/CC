@@ -1,0 +1,20 @@
+1、FIV - FG54新模板开发
+
+2、SPS 2.0 Intimate - Issues & Enh.
+
+3、SPS 2.0 - Status Report 转变SO状态备份
+
+4、SPS 2.0 - Status Report自动发送邮件功能检测以及设置Job
+
+5、SPS 1.0 CAS - CPPC_N01_FABRIC_HIST  增加字段SAM per Doz .FS 
+
+6、SPS 1.0 EIL - Update功能检测Col 28、29、30不一致时拆分Item　✔
+
+7、SOH - ")"识别为">"导致的Size2识别错误问题
+
+8、SPS 2.0 - Copy单据只有清空成本信息，使用户需要重新Retrieve CA才可保存　✔
+
+9、S4eForm - Asset PO 
+
+10、SPS 2.0 - Status Report增加新字段显示
+

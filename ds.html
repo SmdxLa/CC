@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSeek Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+    .chat-container {
+      width: 400px;
+      height: 600px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #007bff;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+    }
+    .chat-box .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      max-width: 80%;
+    }
+    .chat-box .user {
+      background: #007bff;
+      color: #fff;
+      align-self: flex-end;
+    }
+    .chat-box .bot {
+      background: #f1f1f1;
+      color: #333;
+      align-self: flex-start;
+    }
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .chat-input button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .chat-input button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">DeepSeek Chatbot</div>
+    <div class="chat-box" id="chat-box"></div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "sk-1d54b35405d64478b12cf7b3bbf7fe49"; // 替换为你的 API Key
+    const BASE_URL = "https://api.deepseek.com/chat/completions";
+    let conversationHistory = [];
+
+    function addMessage(role, content) {
+      const chatBox = document.getElementById("chat-box");
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", role);
+      messageDiv.textContent = content;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight; // 滚动到底部
+    }
+
+    async function sendMessage() {
+      const userInput = document.getElementById("user-input").value.trim();
+      if (!userInput) return;
+
+      // 显示用户消息
+      addMessage("user", userInput);
+
+      // 清空输入框
+      document.getElementById("user-input").value = "";
+
+      // 添加到对话历史
+      conversationHistory.push({ role: "user", content: userInput });
+
+      try {
+        console.log("Sending request to API...");
+        console.log("Request body:", JSON.stringify({
+          model: "deepseek-chat",
+          messages: conversationHistory,
+          stream: false,
+        }));
+
+        const response = await fetch(BASE_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "deepseek-chat",
+            messages: conversationHistory,
+            stream: false,
+          }),
+        });
+
+        console.log("API response status:", response.status);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API error response:", errorData);
+          throw new Error(`HTTP error! status: ${response.status}, message: ${JSON.stringify(errorData)}`);
+        }
+
+        const data = await response.json();
+        console.log("API response data:", data);
+
+        const botReply = data.choices[0].message.content;
+
+        // 显示机器人回复
+        addMessage("bot", botReply);
+
+        // 更新对话历史
+        conversationHistory.push({ role: "assistant", content: botReply });
+      } catch (error) {
+        console.error("Error:", error);
+        addMessage("bot", "抱歉，我遇到了一些问题，请稍后再试！");
+      }
+    }
+
+    // 按下回车键发送消息
+    document.getElementById("user-input").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
