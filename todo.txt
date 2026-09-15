@@ -1,3 +1,10 @@
 Email 官话
 薄荷 手机状态
-备用
+git有本地项目级忽略
+
+备用： 
+agentrouter url丢失
+调整 fengwind 位置
+https://aihub.top 无法访问
+删除24小时
+any 的key不支持模型
