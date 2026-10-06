@@ -8,3 +8,4 @@ agentrouter url丢失
 https://aihub.top 无法访问
 删除24小时
 any 的key不支持模型
+https://cubence.com/ 无法访问
