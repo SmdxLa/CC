@@ -4,3 +4,5 @@ Version 155.0.8059.40 (Official Build) (64-bit)
 TrendAI™ Toolbar for Enterprise
 霸气域名不可用
 goodat.net可用
+
+Deepseek：118.3K 8.8M 32.8K
