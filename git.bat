@@ -1,4 +1,4 @@
-
+```bat
 @echo off
 setlocal EnableExtensions
 chcp 65001 >nul
@@ -22,6 +22,22 @@ if not defined GIT_EXE (
 echo Git: %GIT_EXE%
 echo ==================================
 
+REM 获取今天的日期（格式：MMDD）
+for /f %%D in ('powershell -NoProfile -Command "Get-Date -Format MMdd"') do set "TODAY=%%D"
+
+REM 自动添加并提交
+echo.
+echo [%date% %time%] 正在执行 git add 和 commit...
+"%GIT_EXE%" add .
+"%GIT_EXE%" commit -m "update %TODAY%"
+
+if errorlevel 1 (
+    echo.
+    echo [ERROR] Git commit 失败或没有需要提交的更改。
+    pause
+    exit /b 1
+)
+
 :retry
 echo.
 echo [%date% %time%] 正在尝试 git push...
@@ -42,3 +58,4 @@ echo 10 秒后再次尝试...
 timeout /t 10 /nobreak >nul
 
 goto retry
+```
