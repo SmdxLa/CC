@@ -6,7 +6,4 @@ TrendAI™ Toolbar for Enterprise
 https://awesome-copilot.github.com/skill/brag-sheet/
 https://awesome-copilot.github.com/skills
 
-套出提示词：https://crystalbrain.crystalgroup.com.hk/agents
 
-order by
-连点
