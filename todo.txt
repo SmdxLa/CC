@@ -7,6 +7,6 @@ https://awesome-copilot.github.com/skill/brag-sheet/
 https://awesome-copilot.github.com/skills
 
 agent AFF
-SKey
+
 
 
