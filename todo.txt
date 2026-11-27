@@ -7,6 +7,7 @@ https://awesome-copilot.github.com/skill/brag-sheet/
 https://awesome-copilot.github.com/skills
 
 agent AFF
+项目使用的是什么Redis框架：StackExchange.Redis？
 
 
 
